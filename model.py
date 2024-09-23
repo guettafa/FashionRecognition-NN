@@ -17,14 +17,15 @@ fashion_mnist = tf.keras.datasets.fashion_mnist
 
 # Load train and test data
 #               60_000 samples                 10_000 samples
-(x_fashion_train, y_fashion_train),(x_fashion_test, y_fashion_test) = fashion_mnist.load_data()
+(x_fashion_train, y_fashion_train), (x_fashion_test, y_fashion_test) = fashion_mnist.load_data()
 
 # 55_000 samples
-x_train = x_fashion_train[5000:] / 255.0
-y_train = y_fashion_train[5000:]
+x_train = x_fashion_train / 255.0
+y_train = y_fashion_train
 x_test = x_fashion_test / 255.0
 
 # Fashion MNIST Data Labels glossaire
+# The first column is the label
 class_names = [
     "T-shirt/top", # 0 
     "Trouser",     # 1
@@ -63,7 +64,7 @@ model = tf.keras.models.Sequential([
     - 
     235500 = 235200 + 300 ( Bias )
 """
-print(model.summary())
+# print(model.summary())
 
 # Compiling the model
 model.compile(
@@ -72,14 +73,31 @@ model.compile(
     metrics=["accuracy"]
 )
 
-result = model.fit(
-    x_train,
-    y_train,
-    1,          # Batch Size / 1 Batch size = all the 55_000 samples, 32 batch size = 1719 samples
-    epochs=30,  # Number of time it will go through all the samples
-    # validation_data=(x_valid, y_valid)
-    validation_split=0.1 # Take the last 10% of samples and use them to validate ( if valid is more accurate )
-)
+# Start training the model
+# model.fit(
+#     x_train,
+#     y_train,
+#     1,          # Batch Size / 1 Batch size = all the 55_000 samples, 32 batch size = 1719 samples
+#     epochs=30,  # Number of time it will go through all the samples
+#     validation_split=0.1 # Take the last 10% of samples and use them to validate
+# )
+
+print(x_train)
+print("Last 3 ")
+print(x_train[:3])
+
+x_toPredict = x_test[:1]
+# print(y_fashion_test[:3])
+# y_proba = model.predict(x_toPredict) 
+# print(y_proba.round(2))
+
+
+# Evaluate model with test data
+# model.evaluate(
+#     x_test,
+#     y_fashion_test,
+#     batch_size=1
+# )
 
 # weights, biases = model.layers[1].get_weights() # First Hidden Layer
 
@@ -87,9 +105,9 @@ result = model.fit(
 
 # Display The Clothe image
 
-# plt.imshow(x_train[0])
+# plt.imshow(x_train[:3])
 
-# # # The first column is the label
-# plt.title(class_names[y_train[0]])
+# The first column is the label
+# plt.title(class_names[y_train[:3]])
 
 # plt.show()
