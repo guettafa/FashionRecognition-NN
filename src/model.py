@@ -32,20 +32,19 @@ model.evaluate(
     batch_size=1
 )
 
-# Load saved weights from latest training
-model.load_weights("./checkpoints/latest.ckpt")
-
-
 # train_model(
 #     model, 
 #     x_train, 
 #     y_train
 # )
 
-x_toPredict = x_test[:1]
+# Load trained model
+model = tf.keras.models.load_model("./latest.tf")
+
+x_toPredict = x_test[:2]
 y_prob = model.predict(x_toPredict)
 print(y_prob.round(2))
 
-plt.imshow(x_test[0])
+plt.imshow(x_test[1])
 plt.show()
 
