@@ -32,19 +32,19 @@ model.evaluate(
     batch_size=1
 )
 
-# train_model(
-#     model, 
-#     x_train, 
-#     y_train
-# )
+train_model(
+    model, 
+    x_train, 
+    y_train
+)
 
 # Load trained model
-model = tf.keras.models.load_model("./latest.tf")
+# model = tf.keras.models.load_model("./latest.tf")
 
-x_toPredict = x_test[:2]
+x_toPredict = x_test[:1]
 y_prob = model.predict(x_toPredict)
 print(y_prob.round(2))
 
-plt.imshow(x_test[1])
+plt.imshow(x_test[0])
 plt.show()
 
